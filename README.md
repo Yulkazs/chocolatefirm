@@ -1,9 +1,9 @@
 # Chocolate Firm Mobile App
 
-## 📌 Projectoverzicht
+## Projectoverzicht
 Dit project richt zich op de end-to-end ontwikkeling van een innovatieve mobiele applicatie voor de Chocolate Firm. Het doel is om de klantervaring te verbeteren en klantloyaliteit te versterken via één centraal digitaal platform.
 
-## 🍫 Casus
+## Casus
 De Chocolate Firm wil een mobiele app ontwikkelen waarmee klanten:
 - Gekochte chocoladeproducten kunnen registreren (via QR-code of handmatige invoer)
 - Inzicht krijgen in productinformatie (herkomst, ingrediënten, certificeringen, allergenen)
@@ -16,13 +16,13 @@ De Chocolate Firm wil een mobiele app ontwikkelen waarmee klanten:
 - Kunnen deelnemen aan een community met recepten en ervaringen
 - Evenementen en verkooppunten kunnen ontdekken via geolocatie
 
-## 🎯 Doelstellingen
+## Doelstellingen
 - Verbeteren van klantbetrokkenheid en loyaliteit  
 - Bieden van een gepersonaliseerde en gebruiksvriendelijke ervaring  
 - Verlagen van servicekosten door self-service  
 - Verkrijgen van datagedreven inzichten voor bedrijfsoptimalisatie  
 
-## 🛠️ Scope van deze repository
+## Scope van deze repository
 Deze repository bevat:
 - Requirements specificatie  
 - Proces- en stakeholderanalyse  
@@ -30,5 +30,5 @@ Deze repository bevat:
 - UX-ontwerpen (sitemap en wireframes)  
 - Documentatie ter ondersteuning van ontwikkeling  
 
-## 🚀 Vervolg
+## Vervolg
 Het project ontwikkelt zich van requirements en design naar realisatie, waarbij de applicatie daadwerkelijk wordt gebouwd en getest.
