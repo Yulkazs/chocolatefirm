@@ -45,3 +45,8 @@ Het verschil tussen de huidige en de gewenste situatie is groot. Nu is alles ver
 | Klantcontact | Via e-mail en telefoon | Via de app, direct en self-service |
 | Inzicht voor medewerkers | Beperkt en vertraagd | Realtime beschikbaar |
 | IT-capaciteit | Weinig ruimte voor nieuwe ontwikkeling | Minder handmatig werk door integraties |
+---
+
+| [< Actoren](actoren.md) | [Productvisie >](productvisie.md) |
+|:---|---:|
+| *Vorige pagina* | *Volgende pagina* |

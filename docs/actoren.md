@@ -61,3 +61,10 @@ Het CRM-systeem bevat klantprofielen met aankoopgeschiedenis, eerdere klachten e
 ### BI-tool
 
 De BI-tool levert inzichten in klantgedrag, smaaktrends en aankoopcycli. Marketingmedewerkers gebruiken deze data voor het analyseren van campagneresultaten en het verfijnen van promoties.
+
+
+---
+
+| [< Organisatorische Context](organisatorische-context.md) | [Bedrijfsprocesanalyse >](bedrijfsprocesanalyse.md) |
+|:---|---:|
+| *Vorige pagina* | *Volgende pagina* |
