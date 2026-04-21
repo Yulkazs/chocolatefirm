@@ -39,3 +39,9 @@ De user stories zijn opgesplitst per actor. Elke actor heeft een eigen bestand.
 The Chocolate Firm ontwikkelt een mobiele applicatie die klanten toegang geeft tot productinformatie, bestellingen, klachtmeldingen en community-functies. De app koppelt met het ERP-systeem, CRM en BI-tool van de organisatie.
 
 Meer informatie over de casus staat in de [root README](../README.md).
+
+---
+
+| | [Organisatorische Context >](organisatorische-context.md) |
+|:---|---:|
+| | *Volgende pagina* |
