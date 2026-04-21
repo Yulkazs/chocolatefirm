@@ -6,7 +6,7 @@ Dit document bevat de productvisie voor de mobiele applicatie van The Chocolate 
 
 ## Product Vision Board
 
-![Product Vision Board](../assets/productvisie.png)
+![Product Vision Board](../Images/Product_Vision_Board.png)
 
 ---
 
