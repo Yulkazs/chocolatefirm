@@ -29,7 +29,6 @@ De user stories zijn opgesplitst per actor. Elke actor heeft een eigen bestand.
 | Zakelijke klant (B2B) | 6 | [zakelijke-klant-b2b.md](user-stories/zakelijke-klant-b2b.md) |
 | Marketingmedewerker | 6 | [marketingmedewerker.md](user-stories/marketingmedewerker.md) |
 | Klantenservicemedewerker | 4 | [klantenservicemedewerker.md](user-stories/klantenservicemedewerker.md) |
-| IT-beheerder | 5 | [it-beheerder.md](user-stories/it-beheerder.md) |
 | Gast / Nieuwe gebruiker | 3 | [gast-nieuwe-gebruiker.md](user-stories/gast-nieuwe-gebruiker.md) |
 
 ---
