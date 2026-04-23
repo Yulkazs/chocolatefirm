@@ -6,97 +6,97 @@ Overzicht van de wireframes voor de actor Klant (B2C).
 
 ## Wireframe 1
 
-![image 56](../../Images/wireframes-img/wireframe-klant/image%2056.png)
+![Screenshot 2026-04-23 204113](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20204113.png)
 
 ---
 
 ## Wireframe 2
 
-![image 57](../../Images/wireframes-img/wireframe-klant/image%2057.png)
+![Screenshot 2026-04-23 204136](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20204136.png)
 
 ---
 
 ## Wireframe 3
 
-![image 60](../../Images/wireframes-img/wireframe-klant/image%2060.png)
+![Screenshot 2026-04-23 204157](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20204157.png)
 
 ---
 
 ## Wireframe 4
 
-![image 61](../../Images/wireframes-img/wireframe-klant/image%2061.png)
+![Screenshot 2026-04-23 210346](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210346.png)
 
 ---
 
 ## Wireframe 5
 
-![image 64](../../Images/wireframes-img/wireframe-klant/image%2064.png)
+![Screenshot 2026-04-23 210409](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210409.png)
 
 ---
 
 ## Wireframe 6
 
-![image 66](../../Images/wireframes-img/wireframe-klant/image%2066.png)
+![Screenshot 2026-04-23 210434](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210434.png)
 
 ---
 
 ## Wireframe 7
 
-![image 68](../../Images/wireframes-img/wireframe-klant/image%2068.png)
+![Screenshot 2026-04-23 210453](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210453.png)
 
 ---
 
 ## Wireframe 8
 
-![image 69](../../Images/wireframes-img/wireframe-klant/image%2069.png)
+![Screenshot 2026-04-23 210519](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210519.png)
 
 ---
 
 ## Wireframe 9
 
-![image 70](../../Images/wireframes-img/wireframe-klant/image%2070.png)
+![Screenshot 2026-04-23 210541](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210541.png)
 
 ---
 
 ## Wireframe 10
 
-![image 71](../../Images/wireframes-img/wireframe-klant/image%2071.png)
+![Screenshot 2026-04-23 210602](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210602.png)
 
 ---
 
 ## Wireframe 11
 
-![image 73](../../Images/wireframes-img/wireframe-klant/image%2073.png)
+![Screenshot 2026-04-23 210624](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210624.png)
 
 ---
 
 ## Wireframe 12
 
-![image 75](../../Images/wireframes-img/wireframe-klant/image%2075.png)
+![Screenshot 2026-04-23 210649](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210649.png)
 
 ---
 
 ## Wireframe 13
 
-![image 76](../../Images/wireframes-img/wireframe-klant/image%2076.png)
+![Screenshot 2026-04-23 210709](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210709.png)
 
 ---
 
 ## Wireframe 14
 
-![Screenshot 2026-04-23 204113](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20204113.png)
+![Screenshot 2026-04-23 210728](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210728.png)
 
 ---
 
 ## Wireframe 15
 
-![Screenshot 2026-04-23 204136](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20204136.png)
+![Screenshot 2026-04-23 210752](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210752.png)
 
 ---
 
 ## Wireframe 16
 
-![Screenshot 2026-04-23 204157](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20204157.png)
+![Screenshot 2026-04-23 210811](../../Images/wireframes-img/wireframe-klant/Screenshot%202026-04-23%20210811.png)
 
 ---
 

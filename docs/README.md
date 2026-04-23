@@ -15,7 +15,7 @@ Deze map bevat de volledige requirements specificatie voor de mobiele applicatie
 | 5 | [User Stories](user-stories/README.md) | Alle user stories met acceptatiecriteria en schattingen |
 | 6 | [DoR en DoD](dor-dod.md) | Definition of Ready en Definition of Done |
 | 7 | [Sitemap](sitemap.md) | Overzicht van de schermstructuur van de applicatie |
-| 8 | [Wireframes](wireframes.md) | Wireframes van de belangrijkste user stories |
+| 8 | [Wireframes](wireframes/README.md) | Wireframes van de belangrijkste user stories |
 
 ---
 
