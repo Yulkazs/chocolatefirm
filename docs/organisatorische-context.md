@@ -60,6 +60,18 @@ Met de mobiele applicatie wil de Chocolate Firm de volgende doelstellingen behal
 
 ## Stakeholders
 
+1.	Klanten (B2B & B2C)
+2.	Klantenservice 
+3.	Marketing
+4.	IT / Development
+5.	Logistiek en Supply chain
+6.	Leveranciers
+7.	Management / Raad van commissarissen 
+8.	Hackers
+9.	Concurrenten
+10.	Frauderende klanten 
+
+
 ### Prioritering
 
 | Direct | Kwaadwillend | Indirect |
