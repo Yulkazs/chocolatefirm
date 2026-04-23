@@ -19,6 +19,6 @@ De sitemap is opgebouwd op basis van het volgende Figma Community template:
 
 ---
 
-| [< Wireframes](wireframes.md) | [DoR en DoD >](dor-dod.md) |
+| [< Wireframes](wireframes/README.md) | [DoR en DoD >](dor-dod.md) |
 |:---|---:|
 | *Vorige pagina* | *Volgende pagina* |
