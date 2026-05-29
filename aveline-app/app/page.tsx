@@ -1,65 +1,153 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { QrCode, BookOpen, Leaf, MapPin, ChevronRight } from "lucide-react";
+
+/* ─── Slide data ─────────────────────────────────────────────────────────── */
+const SLIDES = [
+  {
+    icon: QrCode,
+    title: "Scan je chocolade",
+    body: "Registreer producten via QR-code en ontdek herkomst, ingrediënten en certificeringen van elke reep.",
+    bg: "#EFF5EE",
+    iconColor: "#304C3A",
+  },
+  {
+    icon: BookOpen,
+    title: "Recepten & inspiratie",
+    body: "Bekijk recepten, video-tutorials en ontdek nieuwe smaken — voor thuis en in de keuken.",
+    bg: "#E8F2E8",
+    iconColor: "#304C3A",
+  },
+  {
+    icon: Leaf,
+    title: "Duurzaam & transparant",
+    body: "Inzicht in Fairtrade-certificeringen, cacaopercentage en de herkomst van elke reep.",
+    bg: "#EFF5EE",
+    iconColor: "#304C3A",
+  },
+  {
+    icon: MapPin,
+    title: "Winkels & evenementen",
+    body: "Ontdek verkooppunten, marktkramen en chocoladeworkshops bij jou in de buurt via geolocatie.",
+    bg: "#E8F2E8",
+    iconColor: "#304C3A",
+  },
+] as const;
+
+/* ─── Component ──────────────────────────────────────────────────────────── */
+export default function OnboardingPage() {
+  const router = useRouter();
+  const [current, setCurrent] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+
+  const isLast = current === SLIDES.length - 1;
+
+  function goTo(index: number) {
+    if (animating || index === current) return;
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrent(index);
+      setAnimating(false);
+    }, 200);
+  }
+
+  function next() {
+    if (animating) return;
+    if (isLast) { router.push("/login"); return; }
+    goTo(current + 1);
+  }
+
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches[0].clientX;
+  }
+
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (diff > 50) next();
+    if (diff < -50 && current > 0) goTo(current - 1);
+    touchStartX.current = null;
+  }
+
+  const slide = SLIDES[current];
+  const Icon  = slide.icon;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="mobile-shell">
+      {/* Skip */}
+      <div className="flex justify-end px-6 pt-14">
+        <button
+          onClick={() => router.push("/login")}
+          className="btn-ghost text-sm font-medium"
+          style={{ color: "#7a8f82" }}
+        >
+          Overslaan
+        </button>
+      </div>
+
+      {/* Slide content */}
+      <div
+        className="flex-1 flex flex-col items-center justify-center px-8 text-center select-none"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        style={{ opacity: animating ? 0 : 1, transition: "opacity 200ms ease" }}
+      >
+        <div
+          className="w-36 h-36 rounded-full flex items-center justify-center mb-10"
+          style={{ backgroundColor: slide.bg }}
+        >
+          <Icon size={60} strokeWidth={1.25} style={{ color: slide.iconColor }} />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+        <h2
+          className="font-display text-[2.1rem] leading-snug font-semibold mb-4"
+          style={{ color: "#122A1A" }}
+        >
+          {slide.title}
+        </h2>
+
+        <p
+          className="text-[0.9375rem] leading-relaxed max-w-xs"
+          style={{ color: "#5a6e62" }}
+        >
+          {slide.body}
+        </p>
+      </div>
+
+      {/* Bottom nav */}
+      <div className="px-6 pb-12 flex flex-col items-center gap-6">
+        {/* Dots */}
+        <div className="flex gap-2" role="tablist" aria-label="Stap indicator">
+          {SLIDES.map((_, i) => (
+            <button
+              key={i}
+              role="tab"
+              aria-selected={i === current}
+              onClick={() => goTo(i)}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width:      i === current ? "24px" : "8px",
+                height:     "8px",
+                background: i === current ? "#304C3A" : "#BDD2B7",
+              }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          ))}
         </div>
-      </main>
+
+        <button onClick={next} className="btn-primary flex items-center gap-2">
+          {isLast ? (
+            "Aan de slag"
+          ) : (
+            <>
+              Volgende
+              <ChevronRight size={18} strokeWidth={2} />
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }
