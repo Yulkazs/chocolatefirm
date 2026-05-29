@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Bell, Package, Tag, MessageCircle, Star, Users, ShoppingCart, Sparkles, Check, Trash2 } from "lucide-react";
 
@@ -22,7 +22,7 @@ type Notification = {
   body: string;
   isRead: boolean;
   deepLink?: string;
-  createdAt: Date;
+  createdAt: string;
 };
 
 // ── Icon + color map ──────────────────────────────────────────────────────────
@@ -38,10 +38,10 @@ const TYPE_META: Record<NotificationType, { icon: React.ElementType; bg: string;
 };
 
 // ── Time formatter ────────────────────────────────────────────────────────────
-function timeAgo(date: Date): string {
-  const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-  if (seconds < 60)   return "Zojuist";
-  if (seconds < 3600) return `${Math.floor(seconds / 60)} min geleden`;
+function timeAgo(dateStr: string): string {
+  const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+  if (seconds < 60)    return "Zojuist";
+  if (seconds < 3600)  return `${Math.floor(seconds / 60)} min geleden`;
   if (seconds < 86400) return `${Math.floor(seconds / 3600)} uur geleden`;
   return `${Math.floor(seconds / 86400)} dagen geleden`;
 }
@@ -67,7 +67,6 @@ function NotificationItem({
         borderBottom: "1px solid #f0f0f0",
       }}
     >
-      {/* Unread dot */}
       {!notification.isRead && (
         <span
           className="absolute left-2 top-5 w-1.5 h-1.5 rounded-full"
@@ -75,7 +74,6 @@ function NotificationItem({
         />
       )}
 
-      {/* Icon */}
       <div
         className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
         style={{ background: meta.bg }}
@@ -83,15 +81,11 @@ function NotificationItem({
         <Icon size={18} color={meta.color} strokeWidth={1.75} />
       </div>
 
-      {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
           <p
             className="text-sm leading-snug"
-            style={{
-              color: "#122A1A",
-              fontWeight: notification.isRead ? 400 : 600,
-            }}
+            style={{ color: "#122A1A", fontWeight: notification.isRead ? 400 : 600 }}
           >
             {notification.title}
           </p>
@@ -104,7 +98,6 @@ function NotificationItem({
         </p>
       </div>
 
-      {/* Actions */}
       <div className="flex-shrink-0 flex flex-col gap-1">
         {!notification.isRead && (
           <button
@@ -131,9 +124,9 @@ function NotificationItem({
 
 // ── Filter tabs ───────────────────────────────────────────────────────────────
 const FILTERS = [
-  { key: "all",      label: "Alles"     },
-  { key: "unread",   label: "Ongelezen" },
-  { key: "updates",  label: "Updates"   },
+  { key: "all",     label: "Alles"     },
+  { key: "unread",  label: "Ongelezen" },
+  { key: "updates", label: "Updates"   },
 ] as const;
 
 type Filter = (typeof FILTERS)[number]["key"];
@@ -141,28 +134,45 @@ type Filter = (typeof FILTERS)[number]["key"];
 // ── Main component ────────────────────────────────────────────────────────────
 export default function NotificationsPage() {
   const router = useRouter();
-
-  // In production, fetch from /api/notifications
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [filter, setFilter] = useState<Filter>("all");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/notifications")
+      .then((r) => r.ok ? r.json() : [])
+      .then((data) => setNotifications(data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
-  function handleRead(id: string) {
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, isRead: true } : n))
-    );
-    // In production: fetch("/api/notifications/read", { method: "PATCH", body: JSON.stringify({ id }) })
+  async function handleRead(id: string) {
+    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, isRead: true } : n)));
+    await fetch("/api/notifications", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
   }
 
-  function handleDelete(id: string) {
+  async function handleDelete(id: string) {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
-    // In production: fetch(`/api/notifications/${id}`, { method: "DELETE" })
+    await fetch("/api/notifications", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
   }
 
-  function handleMarkAllRead() {
+  async function handleMarkAllRead() {
     setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
-    // In production: fetch("/api/notifications/read-all", { method: "POST" })
+    await fetch("/api/notifications", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ readAll: true }),
+    });
   }
 
   const filtered = notifications.filter((n) => {
@@ -198,7 +208,6 @@ export default function NotificationsPage() {
           )}
         </div>
 
-        {/* Filter tabs */}
         <div className="flex gap-2.5">
           {FILTERS.map(({ key, label }) => (
             <button
@@ -227,7 +236,11 @@ export default function NotificationsPage() {
 
       {/* List */}
       <div className="flex-1 overflow-y-auto">
-        {filtered.length === 0 ? (
+        {loading ? (
+          <div className="flex items-center justify-center h-full">
+            <p className="text-sm" style={{ color: "#9aada2" }}>Laden…</p>
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full px-8 text-center gap-4">
             <div
               className="w-16 h-16 rounded-2xl flex items-center justify-center"

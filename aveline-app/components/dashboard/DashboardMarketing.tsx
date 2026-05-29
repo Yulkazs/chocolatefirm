@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Megaphone, Users, ChevronRight, Bell, Settings } from "lucide-react";
+import { Megaphone, Users, ChevronRight, Settings } from "lucide-react";
+import NotificationBell from "@/components/dashboard/NotificationBell";
 
 type Props = { firstName: string };
 
@@ -28,14 +29,7 @@ export default function DashboardMarketing({ firstName }: Props) {
             >
               <Settings size={20} color="#304C3A" />
             </button>
-            <button
-              onClick={() => router.push("/dashboard/notificaties")}
-              className="relative p-2 rounded-full"
-              style={{ background: "#f5f8f5" }}
-              aria-label="Notificaties"
-            >
-              <Bell size={20} color="#304C3A" />
-            </button>
+            <NotificationBell />
           </div>
         </div>
       </div>

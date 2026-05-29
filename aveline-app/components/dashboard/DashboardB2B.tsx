@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ShoppingCart, BookOpen, BarChart2, ChevronRight, Bell, Settings } from "lucide-react";
+import { ShoppingCart, BookOpen, BarChart2, ChevronRight, Settings } from "lucide-react";
+import NotificationBell from "@/components/dashboard/NotificationBell";
 
 type Props = { firstName: string };
 
@@ -34,14 +35,7 @@ export default function DashboardB2B({ firstName }: Props) {
             >
               <Settings size={20} color="#304C3A" />
             </button>
-            <button
-              onClick={() => router.push("/dashboard/notificaties")}
-              className="relative p-2 rounded-full"
-              style={{ background: "#f5f8f5" }}
-              aria-label="Notificaties"
-            >
-              <Bell size={20} color="#304C3A" />
-            </button>
+            <NotificationBell />
           </div>
         </div>
       </div>

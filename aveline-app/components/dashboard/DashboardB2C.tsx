@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { QrCode, ChevronRight, Bell, Settings, Sparkles } from "lucide-react";
+import { QrCode, ChevronRight, Settings, Sparkles } from "lucide-react";
+import NotificationBell from "@/components/dashboard/NotificationBell";
 
 type Props = { firstName: string; points: number };
 
@@ -20,7 +21,6 @@ export default function DashboardB2C({ firstName, points }: Props) {
             <p className="text-sm mt-0.5" style={{ color: "#7a8f82" }}>Welkom terug!</p>
           </div>
 
-          {/* Header actions */}
           <div className="flex items-center gap-2 mt-1">
             <button
               onClick={() => router.push("/dashboard/instellingen")}
@@ -30,19 +30,7 @@ export default function DashboardB2C({ firstName, points }: Props) {
             >
               <Settings size={20} color="#304C3A" />
             </button>
-            <button
-              onClick={() => router.push("/dashboard/notificaties")}
-              className="relative p-2 rounded-full"
-              style={{ background: "#f5f8f5" }}
-              aria-label="Notificaties"
-            >
-              <Bell size={20} color="#304C3A" />
-              {/* Unread dot — conditionally render when there are unread notifications */}
-              <span
-                className="absolute top-1 right-1 w-2 h-2 rounded-full border-2 border-white"
-                style={{ background: "#51C675" }}
-              />
-            </button>
+            <NotificationBell />
           </div>
         </div>
       </div>
