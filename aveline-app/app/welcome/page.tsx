@@ -9,7 +9,7 @@ export default function WelcomePage() {
       <div className="flex-1 flex flex-col items-center justify-center px-8 text-center">
         <div className="mb-8">
           <Image
-            src="/logo.png"
+            src="/Logo Transparent.png"
             alt="Avéline"
             width={96}
             height={96}
