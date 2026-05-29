@@ -77,49 +77,78 @@ export default function OnboardingPage() {
 
   return (
     <div className="mobile-shell">
-      {/* Skip */}
-      <div className="flex justify-end px-6 pt-14">
+
+      {/* ── Top bar: skip ──────────────────────────────────────────────── */}
+      <div className="flex justify-end px-5 pt-12 pb-2 flex-shrink-0">
         <button
           onClick={() => router.push("/login")}
-          className="btn-ghost text-sm font-medium"
+          className="btn-ghost text-sm"
           style={{ color: "#7a8f82" }}
         >
           Overslaan
         </button>
       </div>
 
-      {/* Slide content */}
+      {/* ── Slide content ──────────────────────────────────────────────── */}
       <div
-        className="flex-1 flex flex-col items-center justify-center px-8 text-center select-none"
+        className="flex-1 flex flex-col items-center justify-center px-8 text-center select-none min-h-0"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        style={{ opacity: animating ? 0 : 1, transition: "opacity 200ms ease" }}
+        style={{
+          opacity:    animating ? 0 : 1,
+          transition: "opacity 200ms ease",
+        }}
       >
+        {/* Icon circle — clamps between small and large screens */}
         <div
-          className="w-36 h-36 rounded-full flex items-center justify-center mb-10"
-          style={{ backgroundColor: slide.bg }}
+          className="rounded-full flex items-center justify-center flex-shrink-0"
+          style={{
+            width:           "clamp(100px, 28vw, 144px)",
+            height:          "clamp(100px, 28vw, 144px)",
+            marginBottom:    "clamp(1.5rem, 5vw, 2.5rem)",
+            backgroundColor: slide.bg,
+          }}
         >
-          <Icon size={60} strokeWidth={1.25} style={{ color: slide.iconColor }} />
+          <Icon
+            style={{
+              width:  "clamp(40px, 11vw, 60px)",
+              height: "clamp(40px, 11vw, 60px)",
+              color:  slide.iconColor,
+            }}
+            strokeWidth={1.25}
+          />
         </div>
 
+        {/* Title */}
         <h2
-          className="font-display text-[2.1rem] leading-snug font-semibold mb-4"
-          style={{ color: "#122A1A" }}
+          className="font-display font-semibold leading-snug"
+          style={{
+            fontSize:     "clamp(1.6rem, 6vw, 2.1rem)",
+            marginBottom: "clamp(0.75rem, 2.5vw, 1rem)",
+            color:        "#122A1A",
+          }}
         >
           {slide.title}
         </h2>
 
+        {/* Body */}
         <p
-          className="text-[0.9375rem] leading-relaxed max-w-xs"
-          style={{ color: "#5a6e62" }}
+          className="leading-relaxed max-w-xs"
+          style={{
+            fontSize: "clamp(0.875rem, 3.5vw, 0.9375rem)",
+            color:    "#5a6e62",
+          }}
         >
           {slide.body}
         </p>
       </div>
 
-      {/* Bottom nav */}
-      <div className="px-6 pb-12 flex flex-col items-center gap-6">
-        {/* Dots */}
+      {/* ── Bottom nav ─────────────────────────────────────────────────── */}
+      <div
+        className="flex flex-col items-center flex-shrink-0 px-6"
+        style={{ paddingBottom: "clamp(1.5rem, 6vw, 3rem)", gap: "1.25rem" }}
+      >
+        {/* Progress dots */}
         <div className="flex gap-2" role="tablist" aria-label="Stap indicator">
           {SLIDES.map((_, i) => (
             <button
@@ -137,7 +166,11 @@ export default function OnboardingPage() {
           ))}
         </div>
 
-        <button onClick={next} className="btn-primary flex items-center gap-2">
+        {/* CTA button */}
+        <button
+          onClick={next}
+          className="btn-primary flex items-center gap-2"
+        >
           {isLast ? (
             "Aan de slag"
           ) : (
@@ -148,6 +181,7 @@ export default function OnboardingPage() {
           )}
         </button>
       </div>
+
     </div>
   );
 }

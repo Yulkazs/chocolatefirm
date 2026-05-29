@@ -27,25 +27,39 @@
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
 body {
-  background: #F7F6F2;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #ffffff;
   color: var(--foreground);
   font-family: var(--font-dm-sans), sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ─── Mobile Shell ──────────────────────────────────────────────────────────── */
-/* Centres a max-width mobile card on large screens                             */
+/* Full-height white card, centred on large screens                             */
 .mobile-shell {
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
+  height: 100dvh;          /* dynamic viewport — accounts for browser chrome   */
   width: 100%;
   max-width: 430px;
   margin-inline: auto;
   background: #ffffff;
-  position: relative;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  position: relative;
 }
 
 /* ─── Typography ────────────────────────────────────────────────────────────── */
@@ -70,6 +84,7 @@ body {
   cursor: pointer;
   border: none;
   text-decoration: none;
+  flex-shrink: 0;
 }
 .btn-primary:hover  { background-color: #253d2e; }
 .btn-primary:active { transform: scale(0.98); }
@@ -90,6 +105,7 @@ body {
   cursor: pointer;
   border: 1.5px solid #304C3A;
   text-decoration: none;
+  flex-shrink: 0;
 }
 .btn-secondary:hover  { background-color: #f0f5f1; }
 .btn-secondary:active { transform: scale(0.98); }
@@ -150,7 +166,7 @@ body {
   background: #e4e4e4;
 }
 
-/* ─── Slide-in animation ────────────────────────────────────────────────────── */
+/* ─── Animations ────────────────────────────────────────────────────────────── */
 @keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0);    }
