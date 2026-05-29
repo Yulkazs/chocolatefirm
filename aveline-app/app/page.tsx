@@ -4,7 +4,6 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { QrCode, BookOpen, Leaf, MapPin, ChevronRight } from "lucide-react";
 
-/* ─── Slide data ─────────────────────────────────────────────────────────── */
 const SLIDES = [
   {
     icon: QrCode,
@@ -36,7 +35,6 @@ const SLIDES = [
   },
 ] as const;
 
-/* ─── Component ──────────────────────────────────────────────────────────── */
 export default function OnboardingPage() {
   const router = useRouter();
   const [current, setCurrent] = useState(0);
@@ -56,7 +54,7 @@ export default function OnboardingPage() {
 
   function next() {
     if (animating) return;
-    if (isLast) { router.push("/login"); return; }
+    if (isLast) { router.push("/welcome"); return; }
     goTo(current + 1);
   }
 
@@ -77,11 +75,10 @@ export default function OnboardingPage() {
 
   return (
     <div className="mobile-shell">
-
-      {/* ── Top bar: skip ──────────────────────────────────────────────── */}
+      {/* ── Top bar: skip ──────────────────────────────────────────── */}
       <div className="flex justify-end px-5 pt-12 pb-2 flex-shrink-0">
         <button
-          onClick={() => router.push("/login")}
+          onClick={() => router.push("/welcome")}
           className="btn-ghost text-sm"
           style={{ color: "#7a8f82" }}
         >
@@ -89,17 +86,13 @@ export default function OnboardingPage() {
         </button>
       </div>
 
-      {/* ── Slide content ──────────────────────────────────────────────── */}
+      {/* ── Slide content ──────────────────────────────────────────── */}
       <div
         className="flex-1 flex flex-col items-center justify-center px-8 text-center select-none min-h-0"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        style={{
-          opacity:    animating ? 0 : 1,
-          transition: "opacity 200ms ease",
-        }}
+        style={{ opacity: animating ? 0 : 1, transition: "opacity 200ms ease" }}
       >
-        {/* Icon circle — clamps between small and large screens */}
         <div
           className="rounded-full flex items-center justify-center flex-shrink-0"
           style={{
@@ -119,7 +112,6 @@ export default function OnboardingPage() {
           />
         </div>
 
-        {/* Title */}
         <h2
           className="font-display font-semibold leading-snug"
           style={{
@@ -131,24 +123,19 @@ export default function OnboardingPage() {
           {slide.title}
         </h2>
 
-        {/* Body */}
         <p
           className="leading-relaxed max-w-xs"
-          style={{
-            fontSize: "clamp(0.875rem, 3.5vw, 0.9375rem)",
-            color:    "#5a6e62",
-          }}
+          style={{ fontSize: "clamp(0.875rem, 3.5vw, 0.9375rem)", color: "#5a6e62" }}
         >
           {slide.body}
         </p>
       </div>
 
-      {/* ── Bottom nav ─────────────────────────────────────────────────── */}
+      {/* ── Bottom nav ─────────────────────────────────────────────── */}
       <div
         className="flex flex-col items-center flex-shrink-0 px-6"
         style={{ paddingBottom: "clamp(1.5rem, 6vw, 3rem)", gap: "1.25rem" }}
       >
-        {/* Progress dots */}
         <div className="flex gap-2" role="tablist" aria-label="Stap indicator">
           {SLIDES.map((_, i) => (
             <button
@@ -166,22 +153,12 @@ export default function OnboardingPage() {
           ))}
         </div>
 
-        {/* CTA button */}
-        <button
-          onClick={next}
-          className="btn-primary flex items-center gap-2"
-        >
-          {isLast ? (
-            "Aan de slag"
-          ) : (
-            <>
-              Volgende
-              <ChevronRight size={18} strokeWidth={2} />
-            </>
+        <button onClick={next} className="btn-primary flex items-center gap-2">
+          {isLast ? "Aan de slag" : (
+            <><span>Volgende</span><ChevronRight size={18} strokeWidth={2} /></>
           )}
         </button>
       </div>
-
     </div>
   );
 }

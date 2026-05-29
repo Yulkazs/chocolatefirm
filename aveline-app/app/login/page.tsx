@@ -47,7 +47,7 @@ export default function LoginPage() {
         const data = await res.json().catch(() => ({}));
         setErrors({ password: data.message ?? "Inloggen mislukt. Controleer je gegevens." });
       } else {
-        window.location.href = "/home";
+        window.location.href = "/dashboard";
       }
     } catch {
       setErrors({ password: "Er ging iets mis. Controleer je verbinding." });
@@ -60,7 +60,7 @@ export default function LoginPage() {
     <div className="mobile-shell">
       {/* Back */}
       <div className="px-5 pt-14">
-        <Link href="/" className="btn-ghost w-fit" aria-label="Terug">
+        <Link href="/welcome" className="btn-ghost w-fit" aria-label="Terug">
           <ChevronLeft size={20} strokeWidth={2} />
         </Link>
       </div>

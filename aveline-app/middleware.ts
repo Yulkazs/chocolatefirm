@@ -5,13 +5,20 @@ const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET ?? "aveline-dev-secret-change-in-production"
 );
 
-const PROTECTED = ["/home"];
-const AUTH_ONLY = ["/login", "/register"]; // redirect logged-in users away
+const PROTECTED  = ["/dashboard"];
+const AUTH_ONLY  = ["/login", "/register", "/welcome"];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const token = req.cookies.get("aveline_token")?.value;
 
+  // Redirect old /home path to /dashboard
+  if (pathname === "/home" || pathname.startsWith("/home/")) {
+    const url = req.nextUrl.clone();
+    url.pathname = pathname.replace(/^\/home/, "/dashboard");
+    return NextResponse.redirect(url);
+  }
+
+  const token = req.cookies.get("aveline_token")?.value;
   let isValid = false;
   if (token) {
     try {
@@ -22,23 +29,23 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // Protect /home — redirect to login if not authenticated
+  // Protect /dashboard — redirect to login if not authenticated
   if (PROTECTED.some((p) => pathname.startsWith(p)) && !isValid) {
-    const loginUrl = req.nextUrl.clone();
-    loginUrl.pathname = "/login";
-    return NextResponse.redirect(loginUrl);
+    const url = req.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
   }
 
-  // Already logged in — redirect away from login/register to dashboard
+  // Already logged in — redirect away from auth pages to dashboard
   if (AUTH_ONLY.some((p) => pathname.startsWith(p)) && isValid) {
-    const homeUrl = req.nextUrl.clone();
-    homeUrl.pathname = "/home";
-    return NextResponse.redirect(homeUrl);
+    const url = req.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/home/:path*", "/login", "/register"],
+  matcher: ["/home/:path*", "/dashboard/:path*", "/login", "/register", "/welcome"],
 };

@@ -66,7 +66,7 @@ export default function RegisterPage() {
         const data = await res.json().catch(() => ({}));
         setErrors({ email: data.message ?? "Registratie mislukt. Probeer opnieuw." });
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     } catch {
       setErrors({ email: "Er ging iets mis. Controleer je verbinding." });
@@ -79,7 +79,7 @@ export default function RegisterPage() {
     <div className="mobile-shell">
       {/* Back */}
       <div className="px-5 pt-14">
-        <Link href="/" className="btn-ghost w-fit" aria-label="Terug">
+        <Link href="/welcome" className="btn-ghost w-fit" aria-label="Terug">
           <ChevronLeft size={20} strokeWidth={2} />
         </Link>
       </div>
