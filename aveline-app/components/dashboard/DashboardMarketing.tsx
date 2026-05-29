@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Megaphone, Users, ChevronRight, Bell } from "lucide-react";
+import { Megaphone, Users, ChevronRight, Bell, Settings } from "lucide-react";
 
 type Props = { firstName: string };
 
@@ -18,14 +18,29 @@ export default function DashboardMarketing({ firstName }: Props) {
             </h1>
             <p className="text-sm mt-0.5" style={{ color: "#7a8f82" }}>Marketing dashboard</p>
           </div>
-          <button className="relative p-2 rounded-full mt-1" style={{ background: "#f5f8f5" }} aria-label="Notificaties">
-            <Bell size={20} color="#304C3A" />
-          </button>
+
+          <div className="flex items-center gap-2 mt-1">
+            <button
+              onClick={() => router.push("/dashboard/instellingen")}
+              className="p-2 rounded-full"
+              style={{ background: "#f5f8f5" }}
+              aria-label="Instellingen"
+            >
+              <Settings size={20} color="#304C3A" />
+            </button>
+            <button
+              onClick={() => router.push("/dashboard/notificaties")}
+              className="relative p-2 rounded-full"
+              style={{ background: "#f5f8f5" }}
+              aria-label="Notificaties"
+            >
+              <Bell size={20} color="#304C3A" />
+            </button>
+          </div>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto px-5 pb-6">
-        {/* Stats */}
         <div className="grid grid-cols-2 gap-3 mb-7 mt-2">
           {[
             { label: "Actieve promoties", value: "—" },
@@ -49,7 +64,10 @@ export default function DashboardMarketing({ firstName }: Props) {
               className="flex items-center gap-4 p-4 rounded-2xl text-left"
               style={{ background: bg }}
             >
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(48,76,58,0.12)" }}>
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: "rgba(48,76,58,0.12)" }}
+              >
                 <Icon size={22} color="#304C3A" strokeWidth={1.5} />
               </div>
               <span className="font-medium text-sm flex-1" style={{ color: "#122A1A" }}>{label}</span>

@@ -19,15 +19,31 @@ export default function DashboardB2C({ firstName, points }: Props) {
             </h1>
             <p className="text-sm mt-0.5" style={{ color: "#7a8f82" }}>Welkom terug!</p>
           </div>
-          <button
-            onClick={() => router.push("/dashboard/profiel")}
-            className="relative p-2 rounded-full mt-1"
-            style={{ background: "#f5f8f5" }}
-            aria-label="Notificaties"
-          >
-            <Bell size={20} color="#304C3A" />
-            <span className="absolute top-1 right-1 w-2 h-2 rounded-full border-2 border-white" style={{ background: "#51C675" }} />
-          </button>
+
+          {/* Header actions */}
+          <div className="flex items-center gap-2 mt-1">
+            <button
+              onClick={() => router.push("/dashboard/instellingen")}
+              className="p-2 rounded-full"
+              style={{ background: "#f5f8f5" }}
+              aria-label="Instellingen"
+            >
+              <Settings size={20} color="#304C3A" />
+            </button>
+            <button
+              onClick={() => router.push("/dashboard/notificaties")}
+              className="relative p-2 rounded-full"
+              style={{ background: "#f5f8f5" }}
+              aria-label="Notificaties"
+            >
+              <Bell size={20} color="#304C3A" />
+              {/* Unread dot — conditionally render when there are unread notifications */}
+              <span
+                className="absolute top-1 right-1 w-2 h-2 rounded-full border-2 border-white"
+                style={{ background: "#51C675" }}
+              />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -63,7 +79,6 @@ export default function DashboardB2C({ firstName, points }: Props) {
             </button>
           </div>
 
-          {/* Empty state — no fake data */}
           <div
             className="rounded-2xl p-8 flex flex-col items-center text-center"
             style={{ background: "#f5f8f5" }}

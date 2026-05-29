@@ -17,7 +17,6 @@ type User = {
 
 type Props = { user: User };
 
-/* ── Role label ─────────────────────────────────────────────────────────── */
 const ROLE_LABELS: Record<string, string> = {
   B2C_CLIENT:       "Klant",
   B2B_CLIENT:       "Zakelijke klant",
@@ -26,7 +25,6 @@ const ROLE_LABELS: Record<string, string> = {
   ADMIN:            "Beheerder",
 };
 
-/* ── Avatar initials ────────────────────────────────────────────────────── */
 function Avatar({ name, size = 64 }: { name: string; size?: number }) {
   const initials = name
     .split(" ")
@@ -51,7 +49,6 @@ function Avatar({ name, size = 64 }: { name: string; size?: number }) {
   );
 }
 
-/* ── Component ──────────────────────────────────────────────────────────── */
 export default function ProfielClient({ user }: Props) {
   const router = useRouter();
 
@@ -92,8 +89,8 @@ export default function ProfielClient({ user }: Props) {
   }
 
   const stats = [
-    { label: "Producten gescand", value: user._count.scans,         icon: QrCode },
-    { label: "Community posts",   value: user._count.communityPosts, icon: Users  },
+    { label: "Producten gescand", value: user._count.scans          },
+    { label: "Community posts",   value: user._count.communityPosts  },
   ];
 
   return (
@@ -102,7 +99,7 @@ export default function ProfielClient({ user }: Props) {
       <div className="flex-shrink-0 flex items-center justify-between px-5 pt-14 pb-4">
         <h1 className="font-display text-2xl font-semibold" style={{ color: "#122A1A" }}>Profiel</h1>
         <button
-          onClick={() => setEditing((e) => !e)}
+          onClick={() => router.push("/dashboard/instellingen")}
           className="p-2 rounded-full"
           style={{ background: "#f5f8f5" }}
           aria-label="Instellingen"
@@ -166,6 +163,18 @@ export default function ProfielClient({ user }: Props) {
               </>
             )}
           </div>
+
+          {/* Edit name inline — separate from settings */}
+          {!editing && (
+            <button
+              onClick={() => setEditing(true)}
+              className="flex-shrink-0 p-1.5 rounded-lg text-xs font-medium"
+              style={{ background: "#e8f0e5", color: "#304C3A" }}
+              aria-label="Naam bewerken"
+            >
+              Bewerken
+            </button>
+          )}
         </div>
 
         {/* ── Points ───────────────────────────────────────────────── */}
@@ -222,7 +231,10 @@ export default function ProfielClient({ user }: Props) {
         <div>
           <h2 className="font-semibold text-base mb-3" style={{ color: "#122A1A" }}>Account</h2>
           <div className="rounded-2xl overflow-hidden border" style={{ borderColor: "#e8ede9" }}>
-            <div className="flex items-center justify-between px-4 py-3.5 border-b" style={{ borderColor: "#e8ede9" }}>
+            <div
+              className="flex items-center justify-between px-4 py-3.5 border-b"
+              style={{ borderColor: "#e8ede9" }}
+            >
               <span className="text-sm" style={{ color: "#304C3A" }}>E-mailadres</span>
               <span className="text-sm" style={{ color: "#7a8f82" }}>{user.email}</span>
             </div>
@@ -233,6 +245,26 @@ export default function ProfielClient({ user }: Props) {
               </span>
             </div>
           </div>
+        </div>
+
+        {/* ── Snelkoppelingen ──────────────────────────────────────── */}
+        <div className="flex flex-col gap-2">
+          <button
+            onClick={() => router.push("/dashboard/instellingen")}
+            className="flex items-center justify-between px-4 py-3.5 rounded-2xl border"
+            style={{ borderColor: "#e8ede9" }}
+          >
+            <span className="text-sm font-medium" style={{ color: "#304C3A" }}>Instellingen</span>
+            <ChevronRight size={16} color="#BDD2B7" />
+          </button>
+          <button
+            onClick={() => router.push("/dashboard/notificaties")}
+            className="flex items-center justify-between px-4 py-3.5 rounded-2xl border"
+            style={{ borderColor: "#e8ede9" }}
+          >
+            <span className="text-sm font-medium" style={{ color: "#304C3A" }}>Notificaties</span>
+            <ChevronRight size={16} color="#BDD2B7" />
+          </button>
         </div>
 
         {/* ── Uitloggen ────────────────────────────────────────────── */}

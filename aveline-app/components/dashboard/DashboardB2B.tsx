@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ShoppingCart, BookOpen, BarChart2, ChevronRight, Bell } from "lucide-react";
+import { ShoppingCart, BookOpen, BarChart2, ChevronRight, Bell, Settings } from "lucide-react";
 
 type Props = { firstName: string };
 
@@ -9,9 +9,9 @@ export default function DashboardB2B({ firstName }: Props) {
   const router = useRouter();
 
   const TILES = [
-    { label: "Catalogus",  href: "/dashboard/catalogus", icon: BookOpen,     bg: "#EFF5EE" },
-    { label: "Bestellingen", href: "/dashboard/orders",  icon: ShoppingCart, bg: "#E8F2E8" },
-    { label: "Analytics",  href: "/dashboard/analytics", icon: BarChart2,    bg: "#EFF5EE" },
+    { label: "Catalogus",    href: "/dashboard/catalogus",  icon: BookOpen,     bg: "#EFF5EE" },
+    { label: "Bestellingen", href: "/dashboard/orders",     icon: ShoppingCart, bg: "#E8F2E8" },
+    { label: "Analytics",    href: "/dashboard/analytics",  icon: BarChart2,    bg: "#EFF5EE" },
   ];
 
   return (
@@ -24,9 +24,25 @@ export default function DashboardB2B({ firstName }: Props) {
             </h1>
             <p className="text-sm mt-0.5" style={{ color: "#7a8f82" }}>Welkom terug!</p>
           </div>
-          <button className="relative p-2 rounded-full mt-1" style={{ background: "#f5f8f5" }} aria-label="Notificaties">
-            <Bell size={20} color="#304C3A" />
-          </button>
+
+          <div className="flex items-center gap-2 mt-1">
+            <button
+              onClick={() => router.push("/dashboard/instellingen")}
+              className="p-2 rounded-full"
+              style={{ background: "#f5f8f5" }}
+              aria-label="Instellingen"
+            >
+              <Settings size={20} color="#304C3A" />
+            </button>
+            <button
+              onClick={() => router.push("/dashboard/notificaties")}
+              className="relative p-2 rounded-full"
+              style={{ background: "#f5f8f5" }}
+              aria-label="Notificaties"
+            >
+              <Bell size={20} color="#304C3A" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -43,7 +59,10 @@ export default function DashboardB2B({ firstName }: Props) {
               className="flex items-center gap-4 p-4 rounded-2xl text-left active:scale-[0.99] transition-transform"
               style={{ background: bg }}
             >
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(48,76,58,0.12)" }}>
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: "rgba(48,76,58,0.12)" }}
+              >
                 <Icon size={22} color="#304C3A" strokeWidth={1.5} />
               </div>
               <span className="font-medium text-sm flex-1" style={{ color: "#122A1A" }}>{label}</span>
@@ -52,7 +71,6 @@ export default function DashboardB2B({ firstName }: Props) {
           ))}
         </div>
 
-        {/* Orders placeholder */}
         <div className="mt-7">
           <h2 className="font-semibold text-base mb-3" style={{ color: "#122A1A" }}>Recente bestellingen</h2>
           <div className="rounded-2xl p-6 flex flex-col items-center text-center" style={{ background: "#f5f8f5" }}>
