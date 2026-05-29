@@ -1,6 +1,9 @@
 import { redirect } from "next/navigation";
 import { getAuth } from "@/lib/auth";
-import BottomNav, { type UserRole } from "@/components/dashboard/BottomNav";
+import BottomNavWrapper from "@/components/dashboard/BottomNavWrapper";
+
+// Force server re-render on every request so auth is always fresh
+export const dynamic = "force-dynamic";
 
 export default async function DashboardLayout({
   children,
@@ -12,13 +15,17 @@ export default async function DashboardLayout({
 
   return (
     <div className="mobile-shell">
-      {/* Page content fills available space */}
       <div className="flex-1 overflow-y-auto min-h-0">
         {children}
       </div>
 
-      {/* Role-aware bottom nav */}
-      <BottomNav role={auth.role as UserRole} />
+      {/*
+        Pass the role from the verified JWT as the initial value.
+        BottomNavWrapper will re-validate client-side on mount so
+        the nav always reflects the current role — even if the role
+        changed since the JWT was issued.
+      */}
+      <BottomNavWrapper initialRole={auth.role} />
     </div>
   );
 }
