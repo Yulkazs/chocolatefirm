@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import type { BadgeType as PrismaBadgeType } from "@/app/generated/prisma/client";
 
 /* ─── Point values per action ─────────────────────────────────────────────── */
 export const POINTS: Record<string, number> = {
@@ -9,17 +10,6 @@ export const POINTS: Record<string, number> = {
 };
 
 /* ─── Badge unlock rules ──────────────────────────────────────────────────── */
-// Each rule is checked AFTER the points are added.
-// Return true → badge is awarded (if not already owned).
-type BadgeRule = {
-  type: import("@prisma/client").BadgeType | (typeof BADGE_TYPES)[number];
-  name: string;
-  description: string;
-  check: (userId: string) => Promise<boolean>;
-};
-
-// We use string literals so this file compiles without the generated Prisma
-// types being present at author-time.
 const BADGE_TYPES = [
   "FIRST_SCAN",
   "FIRST_COMPLAINT",
@@ -30,6 +20,13 @@ const BADGE_TYPES = [
 ] as const;
 
 export type BadgeType = (typeof BADGE_TYPES)[number];
+
+type BadgeRule = {
+  type: BadgeType;
+  name: string;
+  description: string;
+  check: (userId: string) => Promise<boolean>;
+};
 
 export const BADGE_RULES: BadgeRule[] = [
   {
@@ -97,9 +94,9 @@ export const BADGE_RULES: BadgeRule[] = [
 export async function seedBadges() {
   for (const rule of BADGE_RULES) {
     await prisma.badge.upsert({
-      where:  { type: rule.type as BadgeType },
+      where:  { type: rule.type as PrismaBadgeType },
       update: { name: rule.name, description: rule.description },
-      create: { type: rule.type as BadgeType, name: rule.name, description: rule.description },
+      create: { type: rule.type as PrismaBadgeType, name: rule.name, description: rule.description },
     });
   }
 }
@@ -113,13 +110,6 @@ export type GamificationResult = {
   badgesEarned: Array<{ type: string; name: string; description: string }>;
 };
 
-/**
- * Call this after every user action that earns points.
- *
- * @example
- *   const result = await awardPoints(userId, "SCAN");
- *   // result.badgesEarned → array of newly unlocked badges
- */
 export async function awardPoints(
   userId: string,
   action: GamificationAction
@@ -147,24 +137,21 @@ export async function awardPoints(
   const earned: GamificationResult["badgesEarned"] = [];
 
   for (const rule of BADGE_RULES) {
-    if (ownedTypes.has(rule.type)) continue; // already owned — skip
+    if (ownedTypes.has(rule.type)) continue;
 
     const unlocked = await rule.check(userId);
     if (!unlocked) continue;
 
-    // Fetch or create the badge record
     const badge = await prisma.badge.upsert({
-      where:  { type: rule.type as BadgeType },
+      where:  { type: rule.type as PrismaBadgeType },
       update: {},
-      create: { type: rule.type as BadgeType, name: rule.name, description: rule.description },
+      create: { type: rule.type as PrismaBadgeType, name: rule.name, description: rule.description },
     });
 
-    // Award to user
     await prisma.userBadge.create({
       data: { userId, badgeId: badge.id },
     });
 
-    // Send in-app notification
     await prisma.notification.create({
       data: {
         userId,
