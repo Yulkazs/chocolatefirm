@@ -6,9 +6,7 @@ Dit document geeft een overzicht van de schermstructuur van de mobiele app van T
 
 ## Schermstructuur
 
-![Sitemap — Hoofdnavigatie & Instellingen](../Images/sitemapv1.png)
-
-![Sitemap — Volledige schermstructuur](../Images/sitemapv2.png)
+![Sitemap — Hoofdnavigatie & Instellingen](../Images/Sitemap.png)
 
 ---
 
