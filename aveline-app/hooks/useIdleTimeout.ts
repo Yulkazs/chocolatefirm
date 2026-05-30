@@ -12,7 +12,6 @@ const EVENTS: (keyof WindowEventMap)[] = [
   "wheel",
   "click",
   "focus",
-  "visibilitychange",
 ];
 
 type Options = {
@@ -72,11 +71,13 @@ export function useIdleTimeout({
     const handleActivity = () => reset();
 
     EVENTS.forEach((e) => window.addEventListener(e, handleActivity, { passive: true }));
+    document.addEventListener("visibilitychange", handleActivity);
 
     return () => {
       if (idleTimer.current) clearTimeout(idleTimer.current);
       if (warnTimer.current) clearTimeout(warnTimer.current);
       EVENTS.forEach((e) => window.removeEventListener(e, handleActivity));
+      document.removeEventListener("visibilitychange", handleActivity);
     };
   }, [reset]);
 }
