@@ -4,9 +4,13 @@ import { useRouter } from "next/navigation";
 import { AlertCircle, MessageCircle, ChevronRight, Settings } from "lucide-react";
 import NotificationBell from "@/components/dashboard/NotificationBell";
 
-type Props = { firstName: string };
+type Props = {
+  firstName: string;
+  openComplaints: number;
+  activeChats: number;
+};
 
-export default function DashboardCustomerService({ firstName }: Props) {
+export default function DashboardCustomerService({ firstName, openComplaints, activeChats }: Props) {
   const router = useRouter();
 
   return (
@@ -37,11 +41,16 @@ export default function DashboardCustomerService({ firstName }: Props) {
       <div className="flex-1 overflow-y-auto px-5 pb-6">
         <div className="grid grid-cols-2 gap-3 mb-7 mt-2">
           {[
-            { label: "Open klachten", value: "—", color: "#304C3A" },
-            { label: "Actieve chats", value: "—", color: "#304C3A" },
-          ].map(({ label, value, color }) => (
-            <div key={label} className="rounded-2xl p-4" style={{ background: "#f5f8f5" }}>
-              <p className="text-2xl font-semibold font-display" style={{ color }}>{value}</p>
+            { label: "Open klachten", value: openComplaints, urgent: openComplaints > 0 },
+            { label: "Actieve chats", value: activeChats,    urgent: false               },
+          ].map(({ label, value, urgent }) => (
+            <div key={label} className="rounded-2xl p-4" style={{ background: urgent ? "#FEF3C7" : "#f5f8f5" }}>
+              <p
+                className="text-2xl font-semibold font-display"
+                style={{ color: urgent ? "#D97706" : "#304C3A" }}
+              >
+                {value}
+              </p>
               <p className="text-xs mt-1" style={{ color: "#7a8f82" }}>{label}</p>
             </div>
           ))}

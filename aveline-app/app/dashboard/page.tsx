@@ -10,7 +10,6 @@ export default async function DashboardPage() {
   const auth = await getAuth();
   if (!auth) redirect("/login");
 
-  // Fetch real user data from DB
   const user = await prisma.user.findUnique({
     where: { id: auth.sub },
     select: { firstName: true, lastName: true, email: true, role: true, points: true },
@@ -27,8 +26,19 @@ export default async function DashboardPage() {
     case "B2B_CLIENT":
       return <DashboardB2B firstName={firstName} />;
 
-    case "CUSTOMER_SERVICE":
-      return <DashboardCustomerService firstName={firstName} />;
+    case "CUSTOMER_SERVICE": {
+      const [openComplaints, activeChats] = await Promise.all([
+        prisma.complaint.count({ where: { status: "NEW" } }),
+        prisma.chatSession.count({ where: { isActive: true } }),
+      ]);
+      return (
+        <DashboardCustomerService
+          firstName={firstName}
+          openComplaints={openComplaints}
+          activeChats={activeChats}
+        />
+      );
+    }
 
     case "MARKETING":
       return <DashboardMarketing firstName={firstName} />;
