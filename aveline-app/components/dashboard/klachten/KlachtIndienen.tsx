@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   ChevronLeft, Camera, X, CheckCircle2, AlertTriangle,
-  Upload, ChevronDown,
 } from "lucide-react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -20,10 +19,10 @@ type Props = { product: Product };
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 const COMPLAINT_TYPES: Array<{ value: ComplaintType; label: string; description: string; emoji: string }> = [
-  { value: "MELT_DAMAGE",       label: "Smeltschade",          description: "Chocolade is gesmolten of vervormd",    emoji: "🌡️" },
-  { value: "BREAK_DAMAGE",      label: "Breukschade",          description: "Reep is gebroken of verpakking beschadigd", emoji: "💔" },
-  { value: "TEXTURE_DEVIATION", label: "Afwijkende structuur", description: "Kleur, geur of smaak wijkt af",         emoji: "🔬" },
-  { value: "OTHER",             label: "Overig",               description: "Iets anders",                           emoji: "💬" },
+  { value: "MELT_DAMAGE",       label: "Smeltschade",          description: "Chocolade is gesmolten of vervormd",         emoji: "🌡️" },
+  { value: "BREAK_DAMAGE",      label: "Breukschade",          description: "Reep is gebroken of verpakking beschadigd",  emoji: "💔" },
+  { value: "TEXTURE_DEVIATION", label: "Afwijkende structuur", description: "Kleur, geur of smaak wijkt af",              emoji: "🔬" },
+  { value: "OTHER",             label: "Overig",               description: "Iets anders",                                emoji: "💬" },
 ];
 
 // ── Success screen ────────────────────────────────────────────────────────────
@@ -68,11 +67,11 @@ function SuccessScreen({ referenceNumber, onBack }: { referenceNumber: string; o
 // ── Main component ────────────────────────────────────────────────────────────
 export default function KlachtIndienen({ product }: Props) {
   const router = useRouter();
-  const [type, setType]             = useState<ComplaintType | null>(null);
+  const [type, setType]               = useState<ComplaintType | null>(null);
   const [description, setDescription] = useState("");
-  const [photos, setPhotos]         = useState<string[]>([]);
-  const [submitting, setSubmitting] = useState(false);
-  const [errors, setErrors]         = useState<{ type?: string; description?: string }>({});
+  const [photos, setPhotos]           = useState<string[]>([]);
+  const [submitting, setSubmitting]   = useState(false);
+  const [errors, setErrors]           = useState<{ type?: string; description?: string; api?: string }>({});
   const [referenceNumber, setReferenceNumber] = useState<string | null>(null);
 
   function validate(): boolean {
@@ -88,17 +87,36 @@ export default function KlachtIndienen({ product }: Props) {
     if (!validate()) return;
 
     setSubmitting(true);
+    setErrors({});
+
     try {
-      // In production: POST /api/complaints { productId, type, description, mediaUrls: photos }
-      await new Promise((r) => setTimeout(r, 1000));
-      const ref = `KL-2025-${String(Math.floor(Math.random() * 900) + 100).padStart(3, "0")}`;
-      setReferenceNumber(ref);
+      const res = await fetch("/api/complaints", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId:   product.id,
+          type,
+          description: description.trim(),
+          mediaUrls:   photos,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setErrors({ api: data.message ?? "Indienen mislukt. Probeer het opnieuw." });
+        return;
+      }
+
+      setReferenceNumber(data.complaint.referenceNumber);
+    } catch {
+      setErrors({ api: "Er ging iets mis. Controleer je verbinding." });
     } finally {
       setSubmitting(false);
     }
   }
 
-  // Simulate photo pick
+  // Simulate photo pick (no file upload infra yet)
   function handleAddPhoto() {
     const mockUrls = [
       "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=200",
@@ -278,6 +296,9 @@ export default function KlachtIndienen({ product }: Props) {
         className="flex-shrink-0 px-5 py-4 border-t"
         style={{ borderColor: "#f0f0f0" }}
       >
+        {errors.api && (
+          <p className="text-xs text-red-600 mb-3 text-center">{errors.api}</p>
+        )}
         <button
           onClick={handleSubmit}
           disabled={submitting}

@@ -162,8 +162,6 @@ export default function KlachtenClient({ complaints }: Props) {
     return matchFilter && matchSearch;
   });
 
-  // DB already sorts by priority + createdAt, but client-side sort keeps it
-  // correct after filter changes without a round-trip.
   const priorityOrder: Record<ComplaintPriority, number> = { HIGH: 0, MEDIUM: 1, LOW: 2 };
   const sorted = [...filtered].sort((a, b) => {
     const pd = priorityOrder[a.priority] - priorityOrder[b.priority];
@@ -177,7 +175,7 @@ export default function KlachtenClient({ complaints }: Props) {
       <div className="flex-shrink-0 px-5 pt-14 pb-4 bg-white">
         <div className="flex items-center gap-3 mb-5">
           <button
-            onClick={() => router.back()}
+            onClick={() => router.push("/dashboard")}
             className="p-2 rounded-full -ml-1"
             style={{ background: "#f5f8f5" }}
             aria-label="Terug"
